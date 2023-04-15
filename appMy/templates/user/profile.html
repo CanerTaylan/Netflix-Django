@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block css %}
+
+<style>
+    .card img:hover {
+        border: 4px solid white;
+    }
+
+    button:hover {
+        border: 1px solid white;
+        color: white !important;
+    }
+</style>
+{% endblock css %}
+{% block nonheader %}
+
+
+
+{% for i in messages %}
+{% if i.tags == "success" %}
+<div class="alert alert-success alert-dismissible fade show fw-bold" role="alert"
+    style="position: fixed; bottom: 50px; right: 50px; z-index: 1050; min-width: 350px !important; width: fit-content;">
+    {{ i }}, {{ request.user.fname }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+{% if i.tags == "warning" %}
+<div class="alert alert-danger alert-dismissible fade show fw-bold" role="alert"
+    style="position: fixed; bottom: 50px; right: 50px; z-index: 1050; min-width: 350px !important; width: fit-content;">
+    {{ i }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+{% endfor %}
+
+
+<nav class="navbar">
+    <div class="container">
+        <a href="" class="navbar-brand">
+            <img src="{% static 'img/netflix_logo.png' %}" alt="">
+        </a>
+    </div>
+</nav>
+
+<!-- profil seçimi -->
+<div class="container">
+    <div class="row w-75 m-auto bg-black bg-opacity-25">
+        <h1 class="text-center text-light">Kimler İzliyor?</h1>
+
+
+        {% for i in profils %}
+        <div class="col-3 mt-5 mb-5" style="position: relative;">
+            <a href="{% url 'profilDelete' i.id %}" class="btn btn-danger"
+                style="position: absolute; right: 12px; z-index: 50;">x</a>
+   
+                    
+            <a href="{% url 'netflixPage' i.id %}" {% if i.password_active == True %}  data-bs-toggle="modal"
+                data-bs-target="#password{{ i.id }}"  {% endif %} class="text-decoration-none text-secondary">
+                <div class=" card bg-transparent">
+
+                {% if i.image %}
+                <img src="{{ i.image.url }}" class="card-img-top" alt="">
+                {% else %}
+                <img src="{% static 'img/smile-icon.jpg' %}" class="card-img-top" alt="">
+                {% endif %}
+                <div>
+                    <h5 class="card-title text-center ">{{ i.title }}</h5>
+                </div>
+        </div>
+        </a>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="password{{ i.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <form method="POST" class="modal-content">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Profil Şifresi Giriniz</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="password">Şifre :</label>
+                        <input type="password" class="form-control" name="password" id="password">
+                        <input type="hidden" name="profilid" value="{{ i.id }}">
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="submit" name="submit" value="profil-password" class="btn btn-primary">Giriş Yap</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+    {% endfor %}
+
+    <div class="buton mb-5 text-center">
+
+        {% if profils|length < 4 %} <button class="bg-dark text-secondary w-50 p-2" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">Profil Ekle</button>
+
+            {% else %}
+
+            <button class="bg-dark text-danger w-50 p-2 " disabled>Max profil sayısına ulaştın</button>
+            {% endif %}
+
+            <!-- Modal -->
+            <div class=" modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Profil Ekle</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="mt-3">
+                                    <label for="profilname" class="form-label">Profil Adı</label>
+                                    <input type="text" name="name" id="profilname" class="form-control">
+                                </div>
+                                <div class="mt-3">
+                                    <label for="profilimg" class="form-label">Profil Resmi</label>
+                                    <input type="file" name="image" id="profilimg" class="form-control">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" name="submit"  value="profil-create" class="btn btn-primary">Profil Oluştur</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+
+
+
+</div>
+</div>
+</div>
+{% endblock nonheader %}

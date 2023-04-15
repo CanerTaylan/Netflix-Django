@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<style>
+    h2 {
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .hero-image {
+        height: 100%;
+    }
+
+    .hero-text {
+        background-color: rgba(0, 0, 0, 0.700);
+        width: 500px;
+        top: 50%;
+
+    }
+
+    .hero-text2 {
+        width: 75%;
+        margin: auto;
+    }
+
+    .form-control {
+        background-color: rgb(34, 34, 34);
+        border: none;
+        color: gray;
+    }
+
+    .p-grey {
+        color: grey;
+    }
+
+    .con-footer {
+        position: absolute;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.700);
+    }
+
+    @media screen and (max-width: 700px) {
+        .hero-image {
+            background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1)), url(img/arkaplan.jpg);
+        }
+    }
+</style>
+
+{% endblock css %}
+{% block nonheader %}
+
+
+
+{% for i in messages %}
+{% if i.tags == "success" %}
+<div class="alert alert-success alert-dismissible fade show fw-bold" role="alert"
+    style="position: fixed; bottom: 50px; right: 50px; z-index: 1050; min-width: 350px !important; width: fit-content;">
+    {{ i }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+
+{% if i.tags == "warning" %}
+<div class="alert alert-danger alert-dismissible fade show fw-bold" role="alert"
+    style="position: fixed; bottom: 50px; right: 50px; z-index: 1050; min-width: 350px !important; width: fit-content;">
+    {{ i }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+{% endfor %}
+
+
+
+<div class="hero-image">
+    <!-- navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="" class="navbar-brand"><img src="{% static 'img/netflix_logo.png' %}" alt=""></a>
+        </div>
+    </nav>
+
+    <div class="hero-text">
+        <!-- form -->
+        <form action="" class="hero-text2 mt-5 mb-5" method="POST">
+            {% csrf_token %}
+            <h2>Kayıt Ol</h2>
+
+
+
+            <div class="mb-3">
+                <input type="text" class="form-control form-control-lg mt-3" placeholder="İsim" name="fname"
+                    value="{{ fname }}">
+                <input type="text"
+                    class="form-control form-control-lg mt-3 {% if hata == 'email' %} border border-danger border-3 {% endif %}"
+                    placeholder="Email" name="email" value="{{ email }}">
+                <input type="text"
+                    class="form-control form-control-lg mt-3 {% if hata == 'username' %} border border-danger border-3{% endif %}"
+                    placeholder="Kullanıcı Adı" name="username" value="{{ username }}">
+                <input type="password"
+                    class="form-control form-control-lg mt-3 {% if hata == 'password' %} border border-danger border-3{% endif %}"
+                    placeholder="Şifre" name="password1" value="{{ password1 }}">
+                <input type="password"
+                    class="form-control form-control-lg mt-3 {% if hata == 'password' %} border border-danger border-3{% endif %}"
+                    placeholder="Yeniden Şifre" name="password2" value="{{ password2 }}">
+            </div>
+            <div class="d-grid gap-2">
+                <button class="btn btn-danger btn-lg" type="submit">Kayıt oluştur</button>
+            </div>
+
+
+
+            <p class="p-grey">
+                Zaten hesabım var. <a href="{% url 'loginUser' %}">Giriş yap</a>
+            </p>
+        </form>
+    </div>
+
+</div>
+
+
+{% endblock nonheader %}
