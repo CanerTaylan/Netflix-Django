@@ -5,7 +5,7 @@
 <nav class="navbar navbar-expand-lg bg-black fixed-top navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#" style="height: 60px;">
-            <img src="{% static 'img/netflix_logo.png' %}' %}" height="100" alt="" style="object-position: 0 -25px;">
+            <img src="{% static 'img/netflix_logo.png' %}" height="100" alt="" style="object-position: 0 -25px;">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,21 +13,36 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+                {% if profil %}
+
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Anasayfa</a>
+                    <a class="nav-link" aria-current="page" href="{% url 'netflixPage' profil.id %}">Anasayfa</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'diziler' profil.id %}">Diziler</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Diziler</a>
+                    <a class="nav-link" href="{% url 'filmler' profil.id %}">Filmler</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Filmler</a>
-                </li>
+
+
+                {% endif %}
+
+
+
+
+
                 <li class="nav-item">
                     <a class="nav-link" href="#">Yeni ve popüler</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Listem</a>
                 </li>
+
             </ul>
         </div>
 
@@ -38,12 +53,13 @@
                         data-bs-toggle="dropdown" aria-expanded="false">
 
                         {% if profil.image %}
-                        <img src="{{ profil.image.url }}" alt="" style="width: 60px; height: 60px; border-radius: 40%;">
-{{ profil.title }}
+                        <img src="{{ profil.image.url }}" alt="" style="width: 40px; height: 40px; border-radius: 40%;">
                         {% else %}
-
-                        <img src="{% static 'img/smile-profil.png' %}" alt="" style="width: 60px; height: 60px; border-radius: 40%;">
+                        
+                        <img src="{% static 'img/smile-profil.png' %}" alt=""
+                        style="width: 40px; height: 40px; border-radius: 40%;">
                         {% endif %}
+                        {{ profil.title }}
 
 
                     </a>
@@ -52,7 +68,7 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Hesap</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accountPage' %}">Hesap</a></li>
                         <li><a class="dropdown-item" href="#">Yardım Merkezi</a></li>
                         <li><a class="dropdown-item" href="{% url 'logoutUser' %}">Netflix oturumunu kapat</a></li>
                     </ul>

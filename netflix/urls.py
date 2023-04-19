@@ -24,6 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
     path('netflix/<id>/', netflixPage, name='netflixPage'),
+    path('netflix/<id>/diziler/', Diziler, name='diziler'),
+    path('netflix/<id>/filmler/', Filmler, name='filmler'),
     # * USER
     path('profile/', profilePage, name='profilePage'),
     path('account/', accountPage, name='accountPage'),
@@ -31,5 +33,6 @@ urlpatterns = [
     path('logout/', logoutUser, name='logoutUser'),
     path('register/', registerUser, name='registerUser'),
     path('profildelete/<id>', profilDelete, name='profilDelete'),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -21,14 +21,14 @@
 
 {% for i in messages %}
 {% if i.tags == "success" %}
-<div class="alert alert-success alert-dismissible fade show fw-bold" role="alert"
+<div class="alert alert-success alert-dismissible fade show fw-bold alert-animate" role="alert"
     style="position: fixed; bottom: 50px; right: 50px; z-index: 1050; min-width: 350px !important; width: fit-content;">
-    {{ i }}, {{ request.user.fname }}
+    {{ i }}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {% endif %}
 {% if i.tags == "warning" %}
-<div class="alert alert-danger alert-dismissible fade show fw-bold" role="alert"
+<div class="alert alert-danger alert-dismissible fade show fw-bold alert-animate" role="alert"
     style="position: fixed; bottom: 50px; right: 50px; z-index: 1050; min-width: 350px !important; width: fit-content;">
     {{ i }}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

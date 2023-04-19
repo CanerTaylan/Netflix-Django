@@ -1,10 +1,9 @@
-
 {% extends 'base.html' %}
 {% load static %}
 
 
 {% block css %}
-    
+
 <style>
     body,
     html {
@@ -31,9 +30,43 @@
     }
 </style>
 {% endblock css %}
-    
+
 
 {% block body %}
+
+
+{% for i in messages %}
+{% if i.tags == "success" %}
+<div class="toast align-items-center text-bg-success border-0 show alert-animate" role="alert" aria-live="assertive"
+    aria-atomic="true" style="position: fixed; right:20px; bottom: 20px">
+    <div class="d-flex">
+        <div class="toast-body">
+            {{ i }}
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+            aria-label="Close"></button>
+    </div>
+</div>
+{% endif %}
+{% if i.tags == "warning" %}
+<div class="toast align-items-center text-bg-danger border-0 show alert-animate" role="alert" aria-live="assertive"
+    aria-atomic="true" style="position: fixed; right:20px; bottom: 20px">
+    <div class="d-flex">
+        <div class="toast-body">
+            {{ i }}
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+            aria-label="Close"></button>
+    </div>
+</div>
+
+
+{% endif %}
+
+{% endfor %}
+
+
+
 
 
 
@@ -50,56 +83,183 @@
                     <button>Üyeliği iptal et</button>
                 </div>
                 <div class="col">
-                    <strong>berkayulger45920@gmail.com</strong>
-                    <p>Parola:*******</p>
-                    <p>tel: 0537 692 52 42</p>
-                </div>
-                <div class="col">
-                    <a href="">E-postayi değiştir</a> <br>
-                    <a href="">Parolayı değiştir</a> <br>
-                    <a href="">Telefon numarasını değiştir</a>
-                </div>
-            </div>
-
-            <div class="row">
-                <hr>
-                <div class="col">
-                    <h4>Ayarlar</h4>
+                    <strong>{{ request.user.email }}</strong>
+                    <p>Parola: {{ userinfo.password|first }}********{{ userinfo.password|slice:'-1:' }}</p>
+                    <p>tel: 0{{ userinfo.tel }}</p>
                 </div>
 
+                <!--? email change modal-->
                 <div class="col">
-                    <a href="">18+ İçerik</a> <br>
-                    <a href="">Teste katılın</a> <br>
-                    <a href="">İçerik indirilen cihazları yönet</a>
-                </div>
-            </div>
+                    <div>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#modalemail">E-postayi değiştir</a> <br>
 
-            <div class="row">
-                <hr>
-                <div class="col">
-                    <h4>Profil ve ebeveyn kontrolleri</h4>
+                        <div class="modal fade" id="modalemail" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Email değiştir</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="" method="POST">
+                                            {% csrf_token %}
+
+                                            <div>
+                                                <label for="email" class="form-label">Yeni Email</label>
+                                                <input type="email" name="new-email" id="email" class="form-control">
+                                            </div>
+                                            <div>
+                                                <label for="password" class="form-label">Şifreyi giriniz</label>
+                                                <input type="password" name="password" id="password"
+                                                    class="form-control">
+                                            </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" name="submit" value="btn-email"
+                                            class="btn btn-primary">Email
+                                            Kaydet</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Çık</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--? tel change modal-->
+                    <div>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#modaltel">Telefon numarası değiştir</a>
+                        <br>
+
+                        <div class="modal fade" id="modaltel" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Telefon numarası değiştir
+                                        </h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="" method="POST">
+                                            {% csrf_token %}
+
+                                            <div>
+                                                <label for="tel" class="form-label">Yeni Telefon numarası</label>
+                                                <input type="tel" name="new-tel" id="tel" class="form-control">
+                                            </div>
+                                            <div>
+                                                <label for="password" class="form-label">Şifreyi giriniz</label>
+                                                <input type="password" name="password" id="password"
+                                                    class="form-control">
+                                            </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" name="submit" value="btn-tel"
+                                            class="btn btn-primary">Telefon Değiştir</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Çık</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--? parola change modal-->
+                    <div>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#modalpassword">Parolayı değiştir</a>
+                        <br>
+
+                        <div class="modal fade" id="modalpassword" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Parolayı değiştir
+                                        </h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="" method="POST">
+                                            {% csrf_token %}
+                                            <div>
+                                                <label for="password" class="form-label">Eski parolanızı girin</label>
+                                                <input type="password" name="password" id="password"
+                                                    class="form-control">
+                                            </div>
+                                            <div>
+                                                <label for="password" class="form-label">Yeni parolanızı girin</label>
+                                                <input type="password" name="new-password" id="password"
+                                                    class="form-control">
+                                            </div>
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" name="submit" value="btn-password"
+                                            class="btn btn-primary">Parola Değiştir</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Çık</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div class="col">
-                    <button class="accordion"><img src="{% static 'img/smile-profil.png' %}" alt=""> Berkay </button>
-                    <div class="panel">
-                        <p>
-                            <strong>Dil</strong> <br>
-                            <a href="" class="text-end">Değiştir</a>
-                        </p>
-                        <hr>
-                        <p>
-                            <strong>İzleme Kısıtlamaları</strong> <br>
-                            <a href="" class="text-end">Değiştir</a>
-                        </p>
+
+
+
+                <div class="row">
+                    <hr>
+                    <div class="col">
+                        <h4>Ayarlar</h4>
+                    </div>
+
+                    <div class="col">
+                        <a href="">18+ İçerik</a> <br>
+                        <a href="">Teste katılın</a> <br>
+                        <a href="">İçerik indirilen cihazları yönet</a>
                     </div>
                 </div>
-            </div>
 
+                <div class="row">
+                    <hr>
+                    <div class="col">
+                        <h4>Profil ve ebeveyn kontrolleri</h4>
+                    </div>
+
+                    <div class="col">
+                        <button class="accordion"><img src="{% static 'img/smile-profil.png' %}" alt=""> Berkay
+                        </button>
+                        <div class="panel">
+                            <p>
+                                <strong>Dil</strong> <br>
+                                <a href="" class="text-end">Değiştir</a>
+                            </p>
+                            <hr>
+                            <p>
+                                <strong>İzleme Kısıtlamaları</strong> <br>
+                                <a href="" class="text-end">Değiştir</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
-{% endblock body %}
-
-
-
+    {% endblock body %}
