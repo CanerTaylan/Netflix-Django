@@ -243,7 +243,9 @@
                     </div>
 
                     <div class="col">
-                        <button class="accordion"><img src="{% static 'img/smile-profil.png' %}" alt=""> Berkay
+                        <button class="accordion"><img src="{% static 'img/smile-profil.png' %}" alt=""> 
+                            {{ request.user }} | Profil : {{ profil.title }}
+
                         </button>
                         <div class="panel">
                             <p>

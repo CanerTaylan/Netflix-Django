@@ -28,7 +28,7 @@ urlpatterns = [
     path('netflix/<id>/filmler/', Filmler, name='filmler'),
     # * USER
     path('profile/', profilePage, name='profilePage'),
-    path('account/', accountPage, name='accountPage'),
+    path('account/<id>/', accountPage, name='accountPage'),
     path('login/', loginUser, name='loginUser'),
     path('logout/', logoutUser, name='logoutUser'),
     path('register/', registerUser, name='registerUser'),

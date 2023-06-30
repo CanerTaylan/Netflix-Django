@@ -37,10 +37,10 @@ def profilePage(request):
     return render(request, 'user/profile.html', context)
 
 
-def accountPage(request):
+def accountPage(request,id):
     userinfo = Account.objects.get(user=request.user)
     user = User.objects.get(username=request.user)
-    profils = Profil.objects.all()
+    profil = Profil.objects.get(id=id)
 
     if request.method == "POST":
         button =request.POST.get("submit")
@@ -84,7 +84,7 @@ def accountPage(request):
 
     context = {
         "userinfo": userinfo,
-        "profils":profils,
+        "profil":profil,
     }
     return render(request, 'user/hesap.html', context)
 
