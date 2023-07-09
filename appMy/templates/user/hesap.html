@@ -202,8 +202,6 @@
                                                 <input type="password" name="new-password" id="password"
                                                     class="form-control">
                                             </div>
-
-
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" name="submit" value="btn-password"
@@ -215,13 +213,8 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
-
-
-
 
                 <div class="row">
                     <hr>
@@ -230,9 +223,9 @@
                     </div>
 
                     <div class="col">
-                        <a href="">18+ İçerik</a> <br>
-                        <a href="">Teste katılın</a> <br>
-                        <a href="">İçerik indirilen cihazları yönet</a>
+                        <a href="#">18+ İçerik</a> <br>
+                        <a href="#">Teste katılın</a> <br>
+                        <a href="#">İçerik indirilen cihazları yönet</a>
                     </div>
                 </div>
 
@@ -242,20 +235,24 @@
                         <h4>Profil ve ebeveyn kontrolleri</h4>
                     </div>
 
-                    <div class="col">
-                        <button class="accordion"><img src="{% static 'img/smile-profil.png' %}" alt=""> 
-                            {{ request.user }} | Profil : {{ profil.title }}
+                    <div class="col ">
+                        <div class="mb-2 d-flex">
+                            <img src="{{ profil.image.url }}" alt=""
+                                style="width: 40px; height: 40px; border-radius: 40%;">
+                            <h5 class="ms-2 align-self-center"> {{ request.user }} | Profil : {{ profil.title }}</h5>
 
-                        </button>
+                        </div>
+
+
                         <div class="panel">
                             <p>
                                 <strong>Dil</strong> <br>
-                                <a href="" class="text-end">Değiştir</a>
+                                <a href="#" class="text-end">Değiştir</a>
                             </p>
                             <hr>
                             <p>
                                 <strong>İzleme Kısıtlamaları</strong> <br>
-                                <a href="" class="text-end">Değiştir</a>
+                                <a href="#" class="text-end">Değiştir</a>
                             </p>
                         </div>
                     </div>
